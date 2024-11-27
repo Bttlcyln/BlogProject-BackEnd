@@ -13,6 +13,6 @@ namespace Entities.Concrete
         public int BloggerId { get; set; }
         public int PostId { get; set; }
         public string Description { get; set; }
-
+        
     }
 }

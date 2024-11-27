@@ -12,7 +12,6 @@ namespace Entities.Concrete
     {
 
         public int BloggerId { get; set; }
-        public string Content { get; set; }
-        
+        public string Content { get; set; }        
     }
 }
