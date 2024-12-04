@@ -1,5 +1,6 @@
 ﻿using Core.Utilities.Results;
 using Entities.Concrete;
+using Entities.DTOs.Comment;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,8 @@ namespace Business.Abstract
     public interface ICommentService
     {
         IDataResult<List<Comment>> GetAll();
-        IResult Add(Comment comment);
-        IResult Update(Comment comment);
+        IResult Add(AddCommentRequest request);
+        IResult Update(UpdateCommentRequest request);
         IResult Delete(int commentId);
         
     }

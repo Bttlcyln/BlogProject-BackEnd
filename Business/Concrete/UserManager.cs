@@ -3,6 +3,7 @@ using Business.Constants;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
+using Core.Utilities.Security.JWT;
 using DataAccess.Abstract;
 using Entities.DTOs;
 using System;
@@ -91,6 +92,26 @@ namespace Business.Concrete
             userToCheck.Data.PasswordSalt = passwordSalt;
             _userDal.Update(userToCheck.Data);
             return new SuccessResult();
+        }
+
+        public IDataResult<AccessToken> CreateAccessToken(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IDataResult<User> Login(UserForLoginDto userForLoginDto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IResult UserExists(string email)
+        {
+            throw new NotImplementedException();
         }
     }
 }

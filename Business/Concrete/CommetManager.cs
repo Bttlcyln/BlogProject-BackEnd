@@ -1,6 +1,9 @@
 ﻿using Business.Abstract;
+using Business.Constants;
 using Core.Utilities.Results;
+using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs.Comment;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,14 +14,32 @@ namespace Business.Concrete
 {
     public class CommetManager : ICommentService
     {
-        public IResult Add(Comment comment)
+        private readonly ICommentDal _commentDal;
+
+        public CommetManager(ICommentDal commentDal)
         {
-            throw new NotImplementedException();
+            _commentDal = commentDal;
+        }
+
+        public IResult Add(AddCommentRequest request)
+        {
+            Comment commentyEntity = new Comment()
+            {
+                CreatedAt = DateTime.UtcNow,
+                IsActive = true,
+                UserId = request.UserId,
+                PostId = request.PostId,
+                Description = request.Description,
+            };
+            _commentDal.Add(commentyEntity);
+            return new Result(true,"");
         }
 
         public IResult Delete(int commentId)
         {
-            throw new NotImplementedException();
+            Comment comment = _commentDal.Get(c => c.Id == commentId);
+            _commentDal.Delete(comment);
+            return new SuccessResult(Messages.CommentDeleted);
         }
 
         public IDataResult<List<Comment>> GetAll()
@@ -26,9 +47,18 @@ namespace Business.Concrete
             throw new NotImplementedException();
         }
 
-        public IResult Update(Comment comment)
+        public IResult Update(UpdateCommentRequest request)
         {
-            throw new NotImplementedException();
+            var comment = _commentDal.Get(c => c.Id == request.Id);
+            if (comment is null)
+            {
+                return new ErrorResult();
+            }
+            comment.UserId = request.USerId;
+            comment.PostId = request.PostId;
+            comment.Description = request.Description;
+           _commentDal.Update(comment);
+            return new SuccessResult(Messages.CommentUpdated);
         }
     }
 }

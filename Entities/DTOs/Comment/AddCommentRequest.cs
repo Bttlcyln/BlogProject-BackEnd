@@ -1,18 +1,15 @@
-﻿using Core.Entities;
-using Core.Entities.Concrete;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.Concrete
+namespace Entities.DTOs.Comment
 {
-    public class Comment : BaseEntity, IEntity
+    public class AddCommentRequest
     {
         public int UserId { get; set; }
         public int PostId { get; set; }
         public string Description { get; set; }
-        
     }
 }

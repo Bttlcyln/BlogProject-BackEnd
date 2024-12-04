@@ -10,6 +10,8 @@ namespace Entities.Concrete
 {
     public class Like : BaseEntity, IEntity
     {
+        public  int  PostId { get; set; }
+        public int UserId { get; set; }
 
     }
 }

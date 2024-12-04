@@ -10,8 +10,15 @@ namespace Business.Constants
     {
         public static string UserDeleted = "Kullanıcı Silindi";
         public static string UserListed = "Kullanıcı Listelendi";
+        public static string UserUpdated = "Kullanıcı Güncellendi";
         public static string MailNoFound = "Mail Bulunamadı";
         public static string UserNotFound = "Kullanıcı Bulunamadı";
+        public static string CommentAdded = "Yorum Eklendi";
+        public static string CommentDeleted = "Yorum Başarıyla Silindi";
+        public static string CommentUpdated = "Yorum Başarıyla Güncellendi";
+        public static string PostAdded = "Gönderi Eklendi";
+        public static string PostDeleted = "Gönderi Silindi";
+        public static string PostUpdated = "Gönderi Güncellendi";
 
     }
 }

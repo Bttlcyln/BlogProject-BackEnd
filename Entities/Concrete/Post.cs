@@ -11,7 +11,7 @@ namespace Entities.Concrete
     public class Post : BaseEntity, IEntity
     {
 
-        public int BloggerId { get; set; }
+        public int UserId { get; set; }
         public string Content { get; set; }        
     }
 }

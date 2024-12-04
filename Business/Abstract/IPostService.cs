@@ -1,5 +1,6 @@
 ﻿using Core.Utilities.Results;
 using Entities.Concrete;
+using Entities.DTOs.Post;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,8 @@ namespace Business.Abstract
     public interface IPostService
     {
         IDataResult<List<Post>> GetAll();
-        IResult Add(Post post);
-        IResult Update(Post post);
+        IResult Add(AddPostRequest request);
+        IResult Update(UpdatePostRequest request);
         IResult Delete(int postId);
     }
 }

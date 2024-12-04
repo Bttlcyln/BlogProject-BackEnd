@@ -15,7 +15,6 @@ namespace DataAccess.Concrete.EntityFramework.EntityFrameWorkDbContext
             base.OnConfiguring(optionsBuilder);
         }
         public DbSet<Post> Posts { get; set; }
-        public DbSet<Blogger> Bloggers { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Like> Likes { get; set; }

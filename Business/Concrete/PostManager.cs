@@ -1,6 +1,9 @@
 ﻿using Business.Abstract;
+using Business.Constants;
 using Core.Utilities.Results;
+using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs.Post;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,14 +14,31 @@ namespace Business.Concrete
 {
     public class PostManager : IPostService
     {
-        public IResult Add(Post post)
+        private readonly IPostDal _postDal;
+
+        public PostManager(IPostDal postDal)
         {
-            throw new NotImplementedException();
+            _postDal = postDal;
+        }
+
+        public IResult Add(AddPostRequest request)
+        {
+            Post postEntity = new Post()
+            {
+                CreatedAt = DateTime.UtcNow,
+                IsActive = true,
+                UserId = request.UserId,
+                Content = request.Content,
+            };
+            _postDal.Add(postEntity);
+            return new SuccessResult(Messages.PostAdded);
         }
 
         public IResult Delete(int postId)
         {
-            throw new NotImplementedException();
+            Post post = _postDal.Get(p => p.Id ==postId);
+            _postDal.Delete(post);
+            return new SuccessResult(Messages.PostDeleted);
         }
 
         public IDataResult<List<Post>> GetAll()
@@ -26,9 +46,17 @@ namespace Business.Concrete
             throw new NotImplementedException();
         }
 
-        public IResult Update(Post post)
+        public IResult Update(UpdatePostRequest request)
         {
-            throw new NotImplementedException();
+            var post = _postDal.Get(p=> p.Id == request.Id);
+            if (post is null)
+            {
+                return new ErrorResult();
+            }
+            post.Content = request.Content;
+            post.UserId = request.UserId;
+            _postDal.Update(post);
+            return new SuccessResult(Messages.PostUpdated);
         }
     }
 }

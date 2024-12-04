@@ -1,16 +1,14 @@
-﻿using Core.Entities;
-using Core.Entities.Concrete;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.Concrete
+namespace Entities.DTOs.Like
 {
-    public class Notification : BaseEntity, IEntity
+    public class AddLikeRequest
     {
+        public  int PostId { get; set; }
         public int UserId { get; set; }
-
     }
 }

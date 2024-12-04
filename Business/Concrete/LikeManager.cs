@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
 using Core.Utilities.Results;
+using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs.Like;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,14 +13,31 @@ namespace Business.Concrete
 {
     public class LikeManager : ILikeService
     {
-        public IResult Add(Like like)
+        private readonly ILikeDal _likeDal;
+
+        public LikeManager(ILikeDal likeDal)
         {
-            throw new NotImplementedException();
+            _likeDal = likeDal;
+        }
+
+        public IResult Add(AddLikeRequest request)
+        {
+            Like likeEntity = new Like()
+            {
+                CreatedAt = DateTime.Now,
+                IsActive = true,
+                PostId = request.PostId,
+                UserId = request.UserId,
+            };
+            _likeDal.Add(likeEntity);
+            return new SuccessResult();
         }
 
         public IResult Delete(int likeId)
         {
-            throw new NotImplementedException();
+            Like like = _likeDal.Get(l => l.Id == likeId);
+            _likeDal.Delete(like);
+            return new SuccessResult();
         }
 
         public IDataResult<List<Like>> GetAll()
