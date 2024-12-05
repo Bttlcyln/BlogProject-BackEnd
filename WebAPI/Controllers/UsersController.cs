@@ -16,7 +16,7 @@ namespace WebAPI.Controllers
         {
             _userService = userService;
         }
-        [HttpGet("GetById")]
+        [HttpGet("getbyıd")]
         public IActionResult GetById(int id)
         {
             var result = _userService.GetById(id);
@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
                 return BadRequest(result.Message);
             }
         }
-        [HttpGet("GetByMail")]
+        [HttpGet("getbymail")]
         public IActionResult GetByMail(string email)
         {
             var result = _userService.GetByMail(email);
@@ -42,7 +42,7 @@ namespace WebAPI.Controllers
                 return BadRequest(result.Message);
             }
         }
-        [HttpPut("Update")]
+        [HttpPut("update")]
         public IActionResult Update (UpdateUserDto updateUserDto)
         {
             var result = _userService.Update(updateUserDto);
@@ -52,7 +52,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpDelete("Delete")]
+        [HttpDelete("delete")]
         public IActionResult Delete(int userId)
         {
             var result = _userService.Delete(userId);
@@ -62,7 +62,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpPut("UpdatePassword")]
+        [HttpPut("updatepassword")]
         public IActionResult UpdatePasswod(PasswordUpdateDto passwordUpdateDto)
         {
             var result = _userService.UpdatePassword(passwordUpdateDto);
@@ -72,7 +72,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpPut("Login")]
+        [HttpPut("login")]
         public ActionResult Login(UserForLoginDto userForLoginDto)
         {
             var userToLogin = _userService.Login(userForLoginDto);
@@ -87,7 +87,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpPost("Register")]
+        [HttpPost("register")]
         public ActionResult Register(UserForRegisterDto userForRegisterDto)
         {
             var userExists = _userService.UserExists(userForRegisterDto.Email);
