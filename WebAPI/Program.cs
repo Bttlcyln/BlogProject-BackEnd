@@ -1,5 +1,6 @@
 using Business.Abstract;
 using Business.Concrete;
+using Core.Utilities.Security.JWT;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.EntityFramework.EntityFrameWorkDbContext;
@@ -10,13 +11,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<AppDbContext>();
-builder.Services.AddScoped<IUserService, UserManager>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddTransient<IUserDal,EfUserDal>();
-builder.Services.AddScoped<ICommentService, CommetManager>();
+builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddTransient<ICommentDal,EfCommentDal>();
-builder.Services.AddScoped<IPostService, PostManager>();
+builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddTransient<IPostDal,EfPostDal>();
-
+builder.Services.AddScoped<ITokenHelper, JwtHelper>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -32,6 +33,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader());
 
 app.MapControllers();
 

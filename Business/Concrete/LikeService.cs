@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
-    public class LikeManager : ILikeService
+    public class LikeService : ILikeService
     {
         private readonly ILikeDal _likeDal;
 
-        public LikeManager(ILikeDal likeDal)
+        public LikeService(ILikeDal likeDal)
         {
             _likeDal = likeDal;
         }

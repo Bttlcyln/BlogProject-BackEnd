@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
-    public class NotificationManager : INotificationService
+    public class NotificationService : INotificationService
     {
         private readonly INotificationDal _notificationDal;
 
-        public NotificationManager(INotificationDal notificationDal)
+        public NotificationService(INotificationDal notificationDal)
         {
             _notificationDal = notificationDal;
         }

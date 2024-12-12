@@ -14,13 +14,15 @@ using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
-    public class UserManager : IUserService
+    public class UserService : IUserService
     {
-        IUserDal _userDal;
+        private IUserDal _userDal;
+        private ITokenHelper _tokenHelper;
 
-        public UserManager(IUserDal userDal)
+        public UserService(IUserDal userDal,ITokenHelper tokenHelper)
         {
             _userDal = userDal;
+            _tokenHelper = tokenHelper;
         }
 
         public IResult Add(User user)
@@ -51,7 +53,7 @@ namespace Business.Concrete
             var user = _userDal.Get(u=> u.Email == email);
             if (user is null)
             {
-                return new SuccessDataResult<User>(Messages.MailNoFound);
+                return new ErrorDataResult<User>(Messages.MailNoFound);
             }
             return new SuccessDataResult<User>(user);
         }
@@ -96,22 +98,51 @@ namespace Business.Concrete
 
         public IDataResult<AccessToken> CreateAccessToken(User user)
         {
-            throw new NotImplementedException();
+           var claims =GetClaims(user);
+            var accessToken = _tokenHelper.CreateToken(user, claims.Data);
+            return new SuccessDataResult<AccessToken>(accessToken,Messages.AccessTokenCreated);
         }
 
-        public IDataResult<User> Login(UserForLoginDto userForLoginDto)
+        public IDataResult<User> Login(UserForLoginDto request)
         {
-            throw new NotImplementedException();
+           var userToCheck = GetByMail(request.Email);
+            if (userToCheck.Success == false)
+            {
+                return new ErrorDataResult<User>(Messages.UserNotFound);
+            }
+            if (!HashingHelper.VerifyPasswordHash(request.Password, userToCheck.Data.PasswordHash, userToCheck.Data.PasswordSalt))
+            {
+                return new ErrorDataResult<User>(Messages.PasswordError);
+            }
+            return new SuccessDataResult<User>(userToCheck.Data,Messages.SuccessfulLogin);
         }
 
-        public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
+        public IDataResult<User> Register(UserForRegisterDto request, string password)
         {
-            throw new NotImplementedException();
+            byte[] passwordHash, passwordSalt;
+            HashingHelper.CreatePasswordHash(password,out passwordHash, out passwordSalt);
+            var user = new User
+            {
+                Email = request.Email,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt,
+                Status = true,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+            };
+            Add(user);
+            return new SuccessDataResult<User>(user,Messages.UserRegistered);
         }
 
         public IResult UserExists(string email)
         {
-            throw new NotImplementedException();
+            var user = _userDal.Get(u => u.Email == email);
+            if (user is null)
+            {
+                return new SuccessResult();
+            }
+
+            return new ErrorDataResult<User>(Messages.UserAlreadyExists);
         }
     }
 }

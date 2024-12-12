@@ -3,6 +3,7 @@ using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using Entities.DTOs.Post;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,11 @@ using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
-    public class PostManager : IPostService
+    public class PostService : IPostService
     {
         private readonly IPostDal _postDal;
 
-        public PostManager(IPostDal postDal)
+        public PostService(IPostDal postDal)
         {
             _postDal = postDal;
         }
@@ -40,10 +41,14 @@ namespace Business.Concrete
             _postDal.Delete(post);
             return new SuccessResult(Messages.PostDeleted);
         }
-
         public IDataResult<List<Post>> GetAll()
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<Post>>(_postDal.GetAll(), Messages.PostListed);
+        }
+
+        public IDataResult<List<PostDetailDto>> GetPostDetail()
+        {
+            return new SuccessDataResult<List<PostDetailDto>>(_postDal.GetPostDetail());
         }
 
         public IResult Update(UpdatePostRequest request)

@@ -15,7 +15,29 @@ namespace WebAPI.Controllers
         {
             _postService = postService;
         }
-        [HttpPost]
+        [HttpGet("getall")]
+        public IActionResult GetAll()
+        {
+            var result = _postService.GetAll();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest();
+        }
+        [HttpGet("getpostdetail")]   
+        public IActionResult GetPostDetail() 
+        {
+            var result =_postService.GetPostDetail();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest();
+        }
+    
+
+        [HttpPost("add")]
         public IActionResult Add(AddPostRequest request)
         {
             var result = _postService.Add(request);
@@ -25,7 +47,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-        [HttpPut]
+        [HttpPut("update")]
         public IActionResult Update (UpdatePostRequest request)
         {
             var result = _postService.Update(request);
@@ -38,7 +60,7 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
         }
-        [HttpDelete]
+        [HttpDelete("delete")]
        public IActionResult Delete(int postId)
         {
             var result = _postService.Delete(postId);

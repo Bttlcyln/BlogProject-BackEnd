@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
-    public class CommetManager : ICommentService
+    public class CommentService : ICommentService
     {
         private readonly ICommentDal _commentDal;
 
-        public CommetManager(ICommentDal commentDal)
+        public CommentService(ICommentDal commentDal)
         {
             _commentDal = commentDal;
         }

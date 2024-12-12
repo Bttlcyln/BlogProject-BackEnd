@@ -19,6 +19,11 @@ namespace Business.Constants
         public static string PostAdded = "Gönderi Eklendi";
         public static string PostDeleted = "Gönderi Silindi";
         public static string PostUpdated = "Gönderi Güncellendi";
-
+        public static string PasswordError = "Şifre Hatalı";
+        public static string SuccessfulLogin = "Giriş Başarılı";
+        public static string UserRegistered = "Kayıt İşlemi Başarılı";
+        public static string UserAlreadyExists = "Kullanıcı Mevcut";
+        public static string AccessTokenCreated = "Token Oluşturuldu";
+        public static string PostListed = "Gönderiler Listelendi";
     }
 }
