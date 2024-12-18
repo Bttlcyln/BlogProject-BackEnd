@@ -1,9 +1,11 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Core.Extensions;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs.Comment;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,22 +17,27 @@ namespace Business.Concrete
     public class CommentService : ICommentService
     {
         private readonly ICommentDal _commentDal;
+        private readonly IHttpContextAccessor _httpcontextAccessor;
 
-        public CommentService(ICommentDal commentDal)
+        public CommentService(ICommentDal commentDal, IHttpContextAccessor httpContextAccessor)
         {
             _commentDal = commentDal;
+            _httpcontextAccessor = httpContextAccessor;
         }
 
         public IResult Add(AddCommentRequest request)
         {
+            int userId = _httpcontextAccessor.GetUserId();
+
             Comment commentyEntity = new Comment()
             {
                 CreatedAt = DateTime.UtcNow,
                 IsActive = true,
-                UserId = request.UserId,
+                UserId = userId,
                 PostId = request.PostId,
                 Description = request.Description,
             };
+
             _commentDal.Add(commentyEntity);
             return new Result(true,"");
         }

@@ -19,8 +19,8 @@ namespace DataAccess.Concrete.EntityFramework
            using (AppDbContext context = new AppDbContext())
             {
                 var result = from post in context.Posts
-                             join user in context.Users
-                             on post.Id equals user.Id
+                             join user in context.Users on post.Id equals user.Id into userLeftJoin
+                             from user in userLeftJoin.DefaultIfEmpty()
                              select new PostDetailDto
                              {
                                  Id = post.Id,
@@ -29,6 +29,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  IsActive = post.IsActive,
                                  FirstName = user.FirstName,
                                  LastName = user.LastName,
+                                 CommentCount = (context.Comments.Count(c=>c.PostId == post.Id))
                              };
                 return result.ToList();
             }

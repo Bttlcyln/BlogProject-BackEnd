@@ -1,10 +1,12 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Core.Extensions;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
 using Entities.DTOs.Post;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,23 +18,27 @@ namespace Business.Concrete
     public class PostService : IPostService
     {
         private readonly IPostDal _postDal;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public PostService(IPostDal postDal)
+        public PostService(IPostDal postDal, IHttpContextAccessor httpContextAccessor)
         {
             _postDal = postDal;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public IResult Add(AddPostRequest request)
         {
+            int userId = _httpContextAccessor.GetUserId();
+
             Post postEntity = new Post()
             {
                 CreatedAt = DateTime.UtcNow,
                 IsActive = true,
-                UserId = request.UserId,
+                UserId = userId,
                 Content = request.Content,
             };
             _postDal.Add(postEntity);
-            return new SuccessResult(Messages.PostAdded);
+            return new SuccessResult(postEntity.Id.ToString());
         }
 
         public IResult Delete(int postId)

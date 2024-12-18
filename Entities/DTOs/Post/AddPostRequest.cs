@@ -8,7 +8,6 @@ namespace Entities.DTOs.Post
 {
     public class AddPostRequest
     {
-        public int UserId { get; set; }
         public string Content { get; set; }
     }
 }

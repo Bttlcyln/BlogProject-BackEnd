@@ -8,7 +8,6 @@ namespace Entities.DTOs.Comment
 {
     public class AddCommentRequest
     {
-        public int UserId { get; set; }
         public int PostId { get; set; }
         public string Description { get; set; }
     }

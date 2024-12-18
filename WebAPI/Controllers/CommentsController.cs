@@ -17,7 +17,7 @@ namespace WebAPI.Controllers
             _commentService = commentService;
         }
 
-        [HttpGet]
+        [HttpGet("getall")]
         public IActionResult GetAll()
         {
             var result = _commentService.GetAll();
@@ -27,7 +27,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-        [HttpPost]
+        [HttpPost("add")]
         public IActionResult Add(AddCommentRequest request) 
         {
             var result = _commentService.Add(request);
@@ -38,7 +38,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPut]
+        [HttpPut("update")]
         public IActionResult Update(UpdateCommentRequest request)
         {
             var result = _commentService.Update(request);
@@ -53,7 +53,7 @@ namespace WebAPI.Controllers
            
         }
 
-        [HttpDelete]
+        [HttpDelete("delete")]
         public IActionResult Delete(int commentId) 
         {
             var result = _commentService.Delete(commentId);

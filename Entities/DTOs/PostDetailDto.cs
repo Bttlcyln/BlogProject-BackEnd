@@ -18,6 +18,6 @@ namespace Entities.DTOs
         public bool IsActive { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-
+        public int CommentCount { get; set; }
     }
 }
