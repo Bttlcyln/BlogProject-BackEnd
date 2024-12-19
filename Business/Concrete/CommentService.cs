@@ -5,6 +5,7 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs.Comment;
+using Entities.DTOs.Post;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -51,7 +52,12 @@ namespace Business.Concrete
 
         public IDataResult<List<Comment>> GetAll()
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<Comment>>(_commentDal.GetAll(),Messages.CommentListed);
+        }
+
+        public IDataResult<List<CommentDetailDto>>GetCommentByPostId(int postId)
+        {
+            return new SuccessDataResult<List<CommentDetailDto>>(_commentDal.GetCommentById(postId));
         }
 
         public IResult Update(UpdateCommentRequest request)
@@ -67,5 +73,7 @@ namespace Business.Concrete
            _commentDal.Update(comment);
             return new SuccessResult(Messages.CommentUpdated);
         }
+
+       
     }
 }

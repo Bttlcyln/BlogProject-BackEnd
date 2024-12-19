@@ -27,6 +27,18 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+
+        [HttpGet("getbypostid")]
+        public IActionResult GetCommentByPostId(int postId)
+        {
+            var result = _commentService.GetCommentByPostId(postId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
         [HttpPost("add")]
         public IActionResult Add(AddCommentRequest request) 
         {
