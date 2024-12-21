@@ -5,19 +5,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.DTOs.Post
+namespace Entities.DTOs.Notification
 {
-    public class CommentDetailDto : IDto
+    public class NotificationDetailDto : IDto
     {
-        public int Id { get; set; }
         public int UserId { get; set; }
-        public int PostId { get; set; }
-        public string Description { get; set; }
+        public int Id { get; set; }
+        public string Title { get; set; }
         public DateTime CreatedAt { get; set; }
         public bool IsActive { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        
+        public bool IsRead { get; set; }
+        public int NotificationCount {  get; set; }
+       
 
     }
 }

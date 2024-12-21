@@ -16,7 +16,7 @@ namespace WebAPI.Controllers
         {
             _notificationService = notificationService;
         }
-        [HttpGet]
+        [HttpGet("getall")]
         public IActionResult GetAll()
         {
             var result = _notificationService.GetAll();
@@ -26,7 +26,19 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-        [HttpPost]
+        [HttpGet("getallbyuserıd")]
+        public IActionResult GetAllByUserId(int userId)
+        { var result = _notificationService.GetAllByUserId(userId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        
+        
+        }
+
+        [HttpPost("add")]
         public IActionResult Add(AddNotificationRequest request)
         {
             var result = _notificationService.Add(request);
@@ -36,7 +48,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-        [HttpPut]
+        [HttpPut("update")]
         public IActionResult Update(Notification notification) 
         {
             var result = _notificationService.Update(notification);
@@ -49,7 +61,7 @@ namespace WebAPI.Controllers
                 return BadRequest(result);
             }
         }
-        [HttpDelete]
+        [HttpDelete("delete")]
         public IActionResult Delete(int notificationId)
         {
             var result = _notificationService.Delete(notificationId);

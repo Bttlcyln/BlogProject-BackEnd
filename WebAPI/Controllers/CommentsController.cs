@@ -38,6 +38,16 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+        [HttpGet("getcommentdetail")]
+        public IActionResult GetCommentDetail()
+        {
+            var result = _commentService.GetCommentDetail();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
 
         [HttpPost("add")]
         public IActionResult Add(AddCommentRequest request) 

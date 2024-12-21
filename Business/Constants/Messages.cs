@@ -26,5 +26,6 @@ namespace Business.Constants
         public static string AccessTokenCreated = "Token Oluşturuldu";
         public static string PostListed = "Gönderiler Listelendi";
         public static string CommentListed = "Yorumlar Listelendi";
+        public static string NotificationListed = "Bildirimler Listelendi";
     }
 }

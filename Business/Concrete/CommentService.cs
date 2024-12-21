@@ -3,7 +3,9 @@ using Business.Constants;
 using Core.Extensions;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
+using Entities.DTOs;
 using Entities.DTOs.Comment;
 using Entities.DTOs.Post;
 using Microsoft.AspNetCore.Http;
@@ -58,6 +60,11 @@ namespace Business.Concrete
         public IDataResult<List<CommentDetailDto>>GetCommentByPostId(int postId)
         {
             return new SuccessDataResult<List<CommentDetailDto>>(_commentDal.GetCommentById(postId));
+        }
+
+        public IDataResult<List<CommentDetailDto>> GetCommentDetail()
+        {
+            return new SuccessDataResult<List<CommentDetailDto>>(_commentDal.GetCommentDetail());
         }
 
         public IResult Update(UpdateCommentRequest request)

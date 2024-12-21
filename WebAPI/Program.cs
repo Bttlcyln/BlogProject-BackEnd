@@ -18,6 +18,8 @@ builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddTransient<ICommentDal,EfCommentDal>();
 builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddTransient<IPostDal,EfPostDal>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddTransient<INotificationDal,EfNotificationDal>();
 builder.Services.AddScoped<ITokenHelper, JwtHelper>();
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

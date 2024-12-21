@@ -11,6 +11,7 @@ namespace Entities.Concrete
     public class Notification : BaseEntity, IEntity
     {
         public int UserId { get; set; }
-
+        public string Title { get; set; }
+        public bool IsRead { get; set; }
     }
 }

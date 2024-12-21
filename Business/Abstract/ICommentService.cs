@@ -17,6 +17,7 @@ namespace Business.Abstract
         IResult Update(UpdateCommentRequest request);
         IResult Delete(int commentId);
         IDataResult<List<CommentDetailDto>> GetCommentByPostId(int postId);
+        IDataResult<List<CommentDetailDto>> GetCommentDetail();
         
     }
 }

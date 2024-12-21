@@ -1,8 +1,11 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Extensions;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs.Notification;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,22 +17,27 @@ namespace Business.Concrete
     public class NotificationService : INotificationService
     {
         private readonly INotificationDal _notificationDal;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public NotificationService(INotificationDal notificationDal)
+        public NotificationService(INotificationDal notificationDal, IHttpContextAccessor httpContextAccessor)
         {
             _notificationDal = notificationDal;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public IResult Add(AddNotificationRequest request)
         {
+            int userId =_httpContextAccessor.GetUserId();
             Notification notificationEntity = new Notification()
             {
                 CreatedAt = DateTime.UtcNow,
                 IsActive = true,
                 UserId = request.UserId,
+                Title = request.Title,
+                IsRead = true,
             };
             _notificationDal.Add(notificationEntity);
-            return new SuccessResult();
+            return new SuccessResult(notificationEntity.Id.ToString());
         }
 
         public IResult Delete(int notificationId)
@@ -41,7 +49,12 @@ namespace Business.Concrete
 
         public IDataResult<List<Notification>> GetAll()
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<Notification>>(_notificationDal.GetAll(),Messages.NotificationListed);
+        }
+
+        public IDataResult<List<NotificationDetailDto>> GetAllByUserId(int userId)
+        {
+            return new SuccessDataResult<List<NotificationDetailDto>>(_notificationDal.GetAllByUserId(userId)); 
         }
 
         public IResult Update(Notification notification)

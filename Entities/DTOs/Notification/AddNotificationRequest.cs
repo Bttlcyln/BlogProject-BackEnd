@@ -9,5 +9,7 @@ namespace Entities.DTOs.Notification
     public class AddNotificationRequest
     {
         public int UserId { get; set;}
+        public string Title { get; set; }
+        public bool IsRead { get; set; }
     }
 }

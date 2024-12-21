@@ -21,6 +21,9 @@ namespace Core.Extensions
             string accessToken = request?.Headers["Authorization"].FirstOrDefault();
             int userId;
 
+            if(accessToken == "Bearer null")
+                throw new UnauthorizedAccessException("Yetkisiz giriş");
+
             if (!string.IsNullOrEmpty(accessToken))
             {
                 if (accessToken.StartsWith("Bearer")) 

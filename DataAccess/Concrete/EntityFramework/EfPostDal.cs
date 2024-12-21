@@ -21,6 +21,7 @@ namespace DataAccess.Concrete.EntityFramework
                 var result = from post in context.Posts
                              join user in context.Users on post.Id equals user.Id into userLeftJoin
                              from user in userLeftJoin.DefaultIfEmpty()
+                             orderby post.CreatedAt descending
                              select new PostDetailDto
                              {
                                  Id = post.Id,
