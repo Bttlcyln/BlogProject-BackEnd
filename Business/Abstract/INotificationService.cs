@@ -15,6 +15,6 @@ namespace Business.Abstract
         IResult Add(AddNotificationRequest request);
         IResult Update(Notification notification);
         IResult Delete(int notificationId);
-        IDataResult<List<NotificationDetailDto>>GetAllByUserId(int userId);
+        IDataResult<List<NotificationDetailDto>>GetAllByUserId();
     }
 }

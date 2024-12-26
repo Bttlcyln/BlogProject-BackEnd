@@ -37,7 +37,7 @@ namespace Business.Concrete
                 IsRead = true,
             };
             _notificationDal.Add(notificationEntity);
-            return new SuccessResult(notificationEntity.Id.ToString());
+            return new Result(true,"");
         }
 
         public IResult Delete(int notificationId)
@@ -52,8 +52,10 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Notification>>(_notificationDal.GetAll(),Messages.NotificationListed);
         }
 
-        public IDataResult<List<NotificationDetailDto>> GetAllByUserId(int userId)
+        public IDataResult<List<NotificationDetailDto>> GetAllByUserId()
         {
+            int userId = _httpContextAccessor.GetUserId();
+
             return new SuccessDataResult<List<NotificationDetailDto>>(_notificationDal.GetAllByUserId(userId)); 
         }
 

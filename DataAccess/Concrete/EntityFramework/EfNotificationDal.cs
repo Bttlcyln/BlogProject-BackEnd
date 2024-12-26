@@ -28,10 +28,7 @@ namespace DataAccess.Concrete.EntityFramework
                                   IsActive = notification.IsActive,
                                   CreatedAt = notification.CreatedAt,
                                   IsRead = notification.IsRead,
-                                  Title = notification.Title,                           
-                                  FirstName = user.FirstName,
-                                  LastName = user.LastName,
-                                  NotificationCount = (context.Notifications.Count(c=>c.UserId==userId))
+                                  Title = notification.Title,                                                        
                               });
                 return result.ToList();
             }

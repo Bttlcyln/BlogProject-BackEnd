@@ -26,9 +26,9 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-        [HttpGet("getallbyuserıd")]
-        public IActionResult GetAllByUserId(int userId)
-        { var result = _notificationService.GetAllByUserId(userId);
+        [HttpGet("getallbyuserid")]
+        public IActionResult GetAllByUserId() // -> Parametre
+        { var result = _notificationService.GetAllByUserId();
             if (result.Success)
             {
                 return Ok(result);
