@@ -27,14 +27,16 @@ namespace Business.Concrete
                 CreatedAt = DateTime.Now,
                 IsActive = true,
                 PostId = request.PostId,
-                UserId = request.UserId,
+                UserId = request.UserId, // bu şekilde alınmıyordu!!!!!!!!!!!!!!!!!!!!!!!!!
             };
             _likeDal.Add(likeEntity);
             return new SuccessResult();
         }
 
         public IResult Delete(int likeId)
-        {
+        { 
+            // likeId ye göre değil, userId ve postId ye göre bulmalısın
+            // yani postId alınacak request olarak. UserId zaten elimizde vardı hatırlarsan (!) 
             Like like = _likeDal.Get(l => l.Id == likeId);
             _likeDal.Delete(like);
             return new SuccessResult();

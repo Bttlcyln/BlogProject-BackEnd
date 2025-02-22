@@ -27,17 +27,26 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
         [HttpGet("getallbyuserid")]
-        public IActionResult GetAllByUserId() // -> Parametre
-        { var result = _notificationService.GetAllByUserId();
+        public IActionResult GetAllByUserId()
+        { 
+            var result = _notificationService.GetAllByUserId();
+
             if (result.Success)
             {
                 return Ok(result);
             }
             return BadRequest(result);
-        
-        
         }
-
+        [HttpGet("getcount")]
+        public IActionResult GetNotificationCount()
+        {
+            var result = _notificationService.GetNotificationCount();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
         [HttpPost("add")]
         public IActionResult Add(AddNotificationRequest request)
         {
@@ -49,9 +58,9 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
         [HttpPut("update")]
-        public IActionResult Update(Notification notification) 
+        public IActionResult Update(UpdateNotificationRequest request)
         {
-            var result = _notificationService.Update(notification);
+            var result = _notificationService.Update(request);
             if (result.Success)
             {
                 return Ok(result);
@@ -76,3 +85,5 @@ namespace WebAPI.Controllers
         }
     }
 }
+
+

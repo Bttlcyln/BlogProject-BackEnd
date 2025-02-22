@@ -35,6 +35,7 @@ namespace Business.Concrete
                 CreatedAt = DateTime.UtcNow,
                 IsActive = true,
                 UserId = userId,
+                
                 Content = request.Content,
             };
             _postDal.Add(postEntity);

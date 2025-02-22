@@ -54,14 +54,39 @@ namespace Business.Concrete
 
         public IDataResult<List<NotificationDetailDto>> GetAllByUserId()
         {
+            // Okunmamış bildirimleri çektim
+            var notifications = _notificationDal.GetAll(c => c.IsRead == false);
+
+            // Her bildirimin IsRead değerini true yapıp güncelliyoruz.
+            foreach (var item in notifications)
+            {
+                item.IsRead = true;
+                _notificationDal.Update(item); //güncelliyoruz.
+            }
+
             int userId = _httpContextAccessor.GetUserId();
 
-            return new SuccessDataResult<List<NotificationDetailDto>>(_notificationDal.GetAllByUserId(userId)); 
+            return new SuccessDataResult<List<NotificationDetailDto>>(_notificationDal.GetAllByUserId(userId));
         }
 
-        public IResult Update(Notification notification)
+        public IDataResult<int> GetNotificationCount()
         {
-            throw new NotImplementedException();
+            int userId = _httpContextAccessor.GetUserId();
+            int unreadCount = _notificationDal.GetAll(n => n.UserId == userId && !n.IsRead).Count();
+
+            return new SuccessDataResult<int>(unreadCount);
+        }
+        public IResult Update(UpdateNotificationRequest request)
+        {
+            var notification = _notificationDal.Get(c => c.Id == request.Id);
+            if ( notification is null )
+            {
+                return new ErrorResult();
+            }
+            notification.Id = request.Id;
+            notification.IsRead = request.IsRead;
+           _notificationDal.Update(notification);
+            return new SuccessResult();
         }
     }
 }

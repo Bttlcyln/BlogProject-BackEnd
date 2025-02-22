@@ -21,11 +21,15 @@ namespace Business.Concrete
     {
         private readonly ICommentDal _commentDal;
         private readonly IHttpContextAccessor _httpcontextAccessor;
+        private readonly IPostDal _postDal;
+        private readonly INotificationDal _notificationDal;
 
-        public CommentService(ICommentDal commentDal, IHttpContextAccessor httpContextAccessor)
+        public CommentService(ICommentDal commentDal, IHttpContextAccessor httpContextAccessor, IPostDal postDal, INotificationDal notificationDal)
         {
             _commentDal = commentDal;
             _httpcontextAccessor = httpContextAccessor;
+            _postDal = postDal;
+            _notificationDal = notificationDal;
         }
 
         public IResult Add(AddCommentRequest request)
@@ -42,7 +46,32 @@ namespace Business.Concrete
             };
 
             _commentDal.Add(commentyEntity);
-            return new Result(true,"");
+
+            var post = _postDal.Get(p=> p.Id == request.PostId);
+            if (post == null)
+            {
+                return new Result(false, "Gönderi Bulunamadı");
+            }
+
+            Notification notification = new Notification()
+            {
+                CreatedAt = DateTime.UtcNow,
+                IsRead = false,
+                UserId = post.UserId,
+               
+
+                // Description = $"{post.Title} başlıklı gönderine bir yorum geldi."  
+
+            };
+            _notificationDal.Add(notification);
+            return new Result(true, "Yorum Eklendi ve Bildirim Gönderildi");
+            // requestten gelen postId ye ait olan post tablosundaki kaydı çek
+            // çektiğin kayıtta UserId yi kullanarak yeni bir notification kaydı oluştur
+            // bu kayıdın description kısmına "…başlıklı gönderine bir yorum geldi" olacak şekilde açıklama yaz
+            // notification'ı kaydet
+
+
+
         }
 
         public IResult Delete(int commentId)
@@ -74,7 +103,7 @@ namespace Business.Concrete
             {
                 return new ErrorResult();
             }
-            comment.UserId = request.USerId;
+            comment.UserId = request.UserId;
             comment.PostId = request.PostId;
             comment.Description = request.Description;
            _commentDal.Update(comment);

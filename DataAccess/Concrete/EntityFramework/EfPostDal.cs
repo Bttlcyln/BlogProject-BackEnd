@@ -19,7 +19,7 @@ namespace DataAccess.Concrete.EntityFramework
            using (AppDbContext context = new AppDbContext())
             {
                 var result = from post in context.Posts
-                             join user in context.Users on post.Id equals user.Id into userLeftJoin
+                             join user in context.Users on post.UserId equals user.Id into userLeftJoin
                              from user in userLeftJoin.DefaultIfEmpty()
                              orderby post.CreatedAt descending
                              select new PostDetailDto

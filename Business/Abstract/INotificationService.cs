@@ -12,9 +12,11 @@ namespace Business.Abstract
     public interface INotificationService
     {
         IDataResult<List<Notification>> GetAll();
+        IDataResult<int>GetNotificationCount();
         IResult Add(AddNotificationRequest request);
-        IResult Update(Notification notification);
+        IResult Update(UpdateNotificationRequest request);
         IResult Delete(int notificationId);
         IDataResult<List<NotificationDetailDto>>GetAllByUserId();
+
     }
 }
