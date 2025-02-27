@@ -46,33 +46,32 @@ namespace Business.Concrete
             };
 
             _commentDal.Add(commentyEntity);
-
-            var post = _postDal.Get(p=> p.Id == request.PostId);
+          
+            var post = _postDal.Get(p => p.Id == request.PostId);
             if (post == null)
             {
-                return new Result(false, "Gönderi Bulunamadı");
+                return new Result(false, "Gönderi bulunamadı.");
             }
+         
+            int postId = post.UserId;
 
+            
             Notification notification = new Notification()
             {
+                UserId = postId,
                 CreatedAt = DateTime.UtcNow,
                 IsRead = false,
-                UserId = post.UserId,
-               
-
-                // Description = $"{post.Title} başlıklı gönderine bir yorum geldi."  
-
+                Title = $"{post.Content} başlıklı gönderine bir yorum geldi."
             };
+
             _notificationDal.Add(notification);
-            return new Result(true, "Yorum Eklendi ve Bildirim Gönderildi");
-            // requestten gelen postId ye ait olan post tablosundaki kaydı çek
-            // çektiğin kayıtta UserId yi kullanarak yeni bir notification kaydı oluştur
-            // bu kayıdın description kısmına "…başlıklı gönderine bir yorum geldi" olacak şekilde açıklama yaz
-            // notification'ı kaydet
 
-
-
+            return new Result(true, "Yorum eklendi ve bildirim gönderildi.");
         }
+        // requestten gelen postId ye ait olan post tablosundaki kaydı çek
+        // çektiğin kayıtta UserId yi kullanarak yeni bir notification kaydı oluştur
+        // bu kayıdın description kısmına "…başlıklı gönderine bir yorum geldi" olacak şekilde açıklama yaz
+        // notification'ı kaydet
 
         public IResult Delete(int commentId)
         {
