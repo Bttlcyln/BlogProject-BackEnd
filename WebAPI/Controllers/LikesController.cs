@@ -26,7 +26,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest();
         }
-        [HttpPost]
+        [HttpPost("add")]
         public IActionResult Add(AddLikeRequest request)
         {
             var result = _likeServive.Add(request);
@@ -49,7 +49,7 @@ namespace WebAPI.Controllers
                 return BadRequest(result);
             }
         }
-        [HttpDelete]
+        [HttpDelete("delete")]
         public IActionResult Delete(int likeId)
         {
             var result = _likeServive.Delete( likeId);

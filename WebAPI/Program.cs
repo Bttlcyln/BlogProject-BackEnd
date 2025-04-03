@@ -20,6 +20,8 @@ builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddTransient<IPostDal,EfPostDal>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddTransient<INotificationDal,EfNotificationDal>();
+builder.Services.AddScoped<ILikeService, LikeService>();
+builder.Services.AddTransient<ILikeDal,EfLikeDal>();
 builder.Services.AddScoped<ITokenHelper, JwtHelper>();
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

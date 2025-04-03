@@ -27,5 +27,6 @@ namespace Business.Constants
         public static string PostListed = "Gönderiler Listelendi";
         public static string CommentListed = "Yorumlar Listelendi";
         public static string NotificationListed = "Bildirimler Listelendi";
+        public static string LikeDeleted = "Beğenmekten Vazgeçtin";
     }
 }
